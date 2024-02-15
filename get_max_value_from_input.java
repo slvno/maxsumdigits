@@ -1,5 +1,7 @@
 import java.util.Scanner;
-
+import java.util.List;
+import java.util.ArrayList;
+import java.math.BigInteger;
 public class MaxSumDigits {
 
     public static void main(String[] args) {
@@ -7,45 +9,57 @@ public class MaxSumDigits {
         Scanner scanner = new Scanner(System.in);
 
         // Создаем список целых чисел для хранения введенных чисел
-        List<Integer> numbers = new ArrayList<>();
+        List<BigInteger> numbers = new ArrayList<>();
 
         // Читаем числа с клавиатуры до тех пор, пока не будет введена пустая строка
         while (true) {
             // Читаем строку с клавиатуры
-            String numberStr = scanner.nextLine();
+            String inputNumberStr = scanner.nextLine();
 
             // Проверяем, является ли строка пустой
-            if (numberStr.isEmpty()) {
+            if (inputNumberStr.isEmpty()) {
                 // Если строка пустая, выходим из цикла
                 break;
             }
+			
+			// Разбить строку на массив чисел
+            String[] numbers_split = inputNumberStr.split(" ");
 
-            // Преобразуем строку в целое число
-            int number = Integer.parseInt(numberStr);
-
-            // Добавляем число в список
-            numbers.add(number);
+            for (String numberStr : numbers_split) {
+              try
+			  {
+                  // Преобразуем строку в целое число
+                  BigInteger number = new BigInteger(numberStr);
+				
+                  // Добавляем число в список
+                  numbers.add(number);
+			  }
+			  catch (java.lang.NumberFormatException e)
+			  {
+				    System.out.println("Error: "+e.toString()+" number:" +numberStr);
+			  }     
+			}			  
         }
 
         // Закрываем объект класса Scanner
         scanner.close();
 
         // Находим число с максимальной суммой цифр
-        int maxNumber = findMaxSumNumber(numbers);
+        BigInteger maxNumber = findMaxSumNumber(numbers);
 
         // Выводим число с максимальной суммой цифр
         System.out.println(maxNumber);
     }
 
-    private static int findMaxSumNumber(List<Integer> numbers) {
+    private static BigInteger findMaxSumNumber(List<BigInteger> numbers) {
         // Инициализируем переменные для хранения максимальной суммы цифр и числа с максимальной суммой цифр
-        int maxSum = 0;
-        int maxNumber = 0;
-
+        long maxSum = 0;
+        BigInteger maxNumber = BigInteger.ZERO;
+       
         // Перебираем числа в списке
-        for (int number : numbers) {
+        for (BigInteger number : numbers) {
             // Рассчитываем сумму цифр в числе
-            int sumOfDigits = sumOfDigits(number);
+            long sumOfDigits = sumOfDigits(number);
 
             // Проверяем, является ли сумма цифр в числе больше максимальной суммы цифр
             if (sumOfDigits > maxSum) {
@@ -59,17 +73,17 @@ public class MaxSumDigits {
         return maxNumber;
     }
 
-    private static int sumOfDigits(int number) {
+    private static long sumOfDigits(BigInteger number) {
         // Преобразуем число в строку
-        String numberStr = String.valueOf(Math.abs(number));
+        String numberStr = String.valueOf(/*Math.abs(*/number.abs());
 
         // Инициализируем переменную для хранения суммы цифр
-        int sumOfDigits = 0;
+        long sumOfDigits = 0;
 
         // Перебираем цифры в числе
         for (char digit : numberStr.toCharArray()) {
             // Преобразуем цифру в целое число
-            int digitInt = Character.getNumericValue(digit);
+            long digitInt = Character.getNumericValue(digit);
 
             // Добавляем цифру к сумме цифр
             sumOfDigits += digitInt;
@@ -80,6 +94,7 @@ public class MaxSumDigits {
     }
 }
 
+/*
 Тестовый набор входных данных:
 
 12345
@@ -105,3 +120,4 @@ public class MaxSumDigits {
 Примечание:
 
 В приведенном выше приложении мы используем метод Math.abs() для получения абсолютного значения отрицательного числа. Это необходимо для того, чтобы правильно рассчитать сумму цифр в отрицательном числе.
+*/
