@@ -40,7 +40,7 @@ namespace MaxSumDigits
                     break;
                 }
 				
-				string[] numberStrings = inputNumberStr.Split();
+				string[] numberStrings = inputNumberStr.Split(' ', ',');
 
                 Trace.WriteLine(numberStrings.ToString(), "numberStrings");
                 Trace.WriteLine(numberStrings.Length, "numberStrings_count");
@@ -103,7 +103,7 @@ namespace MaxSumDigits
 				
 		       		catch (System.FormatException e)
 				    {
-					     Console.WriteLine("Error:"+e+" value:"+ numberStr);
+					     Trace.WriteLine("Error:"+e+" value:"+ numberStr);
 				    } 
                }
 
@@ -133,7 +133,7 @@ namespace MaxSumDigits
 **Ожидаемый результат:**
 
 ```
-987654321
+987654321 
 ```
 
 **Пояснения:**
